@@ -2,38 +2,77 @@ import quantum.states.ComputaionState;
 import quantum.states.GHZState;
 import quantum.states.NormalStates;
 import quantum.states.SingleParticle;
-import util.Complex;
-import util.Operation;
-import util.Measurement;
-import util.Operators;
-import util.StringTranslate;
+import util.*;
+
 import java.util.Scanner;
 
-public class Test {
+public class simulate {
     public static void main(String[] args) {
+        int count = 0;
+        Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
+        Complex[] b = new Complex[]{new Complex(0, 0), new Complex(1, 0)};
+        Scanner sc = new Scanner(System.in);
+        String s = "";
+        for(int i=0;i<2;i++) {
+            System.out.println("input" + (i+1) + ": ");
+            s = sc.nextLine();  //读取字符串型输入
+            a[i] = StringTranslate.stringToComplex(s);
+        }
+        for(int i=0;i<2;i++) {
+            System.out.println("input" + (i+3) + ": ");
+            s = sc.nextLine();  //读取字符串型输入
+            b[i] = StringTranslate.stringToComplex(s);
+        }
         while(true){
-            if(mygo()==0) {
-                Scanner sc = new Scanner(System.in);
-                String s = "";
+            count++;
+            if(mygo(a,b)==0) {
+                System.out.println("count: " + count);
+                count = 0;
                 System.out.println("again?(y/n)");
                 s = sc.nextLine();  //读取字符串型输入
                 if (!s.equals("y"))
                     break;
+
+                for(int i=0;i<2;i++) {
+                    System.out.println("input" + (i+1) + ": ");
+                    s = sc.nextLine();  //读取字符串型输入
+                    a[i] = StringTranslate.stringToComplex(s);
+                }
+                for(int i=0;i<2;i++) {
+                    System.out.println("input" + (i+3) + ": ");
+                    s = sc.nextLine();  //读取字符串型输入
+                    b[i] = StringTranslate.stringToComplex(s);
+                }
             }
         }
     }
 
-    public static int mygo () {
+    public static int mygo (Complex[] a, Complex b[]) {
+        /**
         //初始化协议
-        Complex[] a = new Complex[]{new Complex(1, 1), new Complex(-1, 5)};
-        Complex[] b = new Complex[]{new Complex(1, 1), new Complex(100, 7)};
+        Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
+        Complex[] b = new Complex[]{new Complex(0, 0), new Complex(1, 0)};
+
+        Scanner sc = new Scanner(System.in);
+        String s = "";
+        for(int i=0;i<2;i++) {
+            System.out.println("input" + (i+1) + ": ");
+            s = sc.nextLine();  //读取字符串型输入
+            a[i] = StringTranslate.stringToComplex(s);
+        }
+        for(int i=0;i<2;i++) {
+            System.out.println("input" + (i+3) + ": ");
+            s = sc.nextLine();  //读取字符串型输入
+            b[i] = StringTranslate.stringToComplex(s);
+        }
+        */
         Complex[] ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
         Operation.normalization(a);
         Operation.normalization(b);
         if( (ab[0].abs()==0) && (ab[1].abs()==0) ) {
             System.out.println("Expect φ2: " + StringTranslate.statesToString(new SingleParticle(a[0],a[1])));
             System.out.println("Expect φ5: " + StringTranslate.statesToString(new SingleParticle(b[0],b[1])));
-            System.out.println("1");
+            System.out.println("");
         } else {
             Operation.normalization(ab);
             Operation.GlobalPhase(ab);
@@ -138,6 +177,7 @@ public class Test {
                     //NEXT();
                 } else {
                     System.out.println("failure");
+                    System.out.println();
                     return -1;
                 }
             }
@@ -172,6 +212,7 @@ public class Test {
         //NEXT();
 
         System.out.println("complete");
+        System.out.println();
 
         //System.out.println("5final:" + SP2_2.getState()[0].toString() + "|0>" + SP2_2.getState()[1].toString() + "|1>");
         //System.out.println("5final:" + SP5_2.getState()[0].toString() + "|0>" + SP5_2.getState()[1].toString() + "|1>");

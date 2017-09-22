@@ -128,10 +128,24 @@ public class Operation {
     {
         //Complex[] states = qs.getState();
         Complex zero = new Complex(0,0);
-        if(states[0].re()<-0.000000000001){
-            for(int i=0;i<states.length;i++)
-            {
-                states[i] = zero.minus(states[i]);
+        for(int i=0;i<states.length;i++){
+            if(states[i].abs()>0.0000000001){
+                if(states[i].re()<-0.000000000001){
+                    for(int j=0;j<states.length;j++)
+                    {
+                        states[j] = zero.minus(states[j]);
+                        if(states[j].abs()<0.00000000000001)
+                            states[j] = new Complex(0,0);
+                    }
+                } else if(states[i].re()<0.000000000001 && states[i].im()<-0.000000000001) {
+                    for(int j=0;j<states.length;j++)
+                    {
+                        states[j] = zero.minus(states[j]);
+                        if(states[j].abs()<0.00000000000001)
+                            states[j] = new Complex(0,0);
+                    }
+                }
+                break;
             }
         }
     }

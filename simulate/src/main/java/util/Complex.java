@@ -14,10 +14,11 @@ public class Complex
 
     // return a string representation of the invoking Complex object
     public String toString() {
-        if (im == 0) return re + "";
-        if (re == 0) return im + "i";
-        if (im <  0) return re + " - " + (-im) + "i";
-        return re + " + " + im + "i";
+
+        if (im == 0) return String.format("%.4f", re) + "";
+        if (re == 0) return String.format("%.4f", im) + "i";
+        if (im <  0) return String.format("%.4f", re) + " - " + String.format("%.4f", -im) + "i";
+        return String.format("%.4f", re) + " + " + String.format("%.4f", im) + "i";
     }
 
     // return abs/modulus/magnitude and angle/phase/argument
