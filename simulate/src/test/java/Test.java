@@ -25,12 +25,13 @@ public class Test {
 
     public static int mygo () {
         //初始化协议
-        Complex[] a = new Complex[]{new Complex(100, 0), new Complex(1, 0)};
-        Complex[] b = new Complex[]{new Complex(2, 0), new Complex(1, 0)};
+        Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
+        Complex[] b = new Complex[]{new Complex(0, 0), new Complex(1, 0)};
         Complex[] ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
         Operation.normalization(a);
         Operation.normalization(b);
         Operation.normalization(ab);
+        Operation.GlobalPhase(ab);
         System.out.println("a0*b0: " + ab[0].toString());
         System.out.println("a1*b1: " + ab[1].toString());
         System.out.println("1");
@@ -71,9 +72,10 @@ public class Test {
         System.out.println(StringTranslate.statesToString(SP5_1));
         System.out.println("2");
         //NEXT();
+        ///////////////////////////////////////
         SingleParticle SP2_2=null;
         SingleParticle SP5_2=null;
-        //if( (m[1][2]!=m[2][2]) || (m[2][1]!=m[1][1]) ) {
+        if( (m[1][2]!=m[2][2]) || (m[2][1]!=m[1][1]) ) {
             //2.酉操作
             Complex[][] VS1 = Operators.Operator_VS1(a, m);
             Complex[][] VS2 = Operators.Operator_VS2(b, m);
@@ -118,10 +120,10 @@ public class Test {
                 System.out.println("failure");
                 return -1;
             }
-        /*} else{
+        } else{
             SP2_2 =SP2_1;
             SP5_2 =SP5_1;
-        }*/
+        }
 
 
         int t1 = n[1][1] ^ n[1][2];
@@ -140,8 +142,8 @@ public class Test {
         SP2_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(n[1][1]^n[2][2],0),Operation.transposition(SP2_2.getState()))));
 
         //第五次输出
-        Operation.GlobalPhase(SP2_2);
-        Operation.GlobalPhase(SP5_2);
+        Operation.GlobalPhase(SP2_2.getState());
+        Operation.GlobalPhase(SP5_2.getState());
         System.out.println(StringTranslate.statesToString(SP2_2));
         System.out.println(StringTranslate.statesToString(SP5_2));
         System.out.println("6");

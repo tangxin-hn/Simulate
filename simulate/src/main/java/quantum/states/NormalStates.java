@@ -32,7 +32,7 @@ public class NormalStates implements QuantumState {
 
     public SingleParticle getSingleParticle(int pos) {
         SingleParticle SP=null;
-        pos = this.getParticles() - pos + 1;
+        int pos2 = this.getParticles() - pos + 1;
         Complex[] temp = new Complex[state.length];
         Complex temp1=null,temp2=null;
         int count=0;
@@ -41,8 +41,8 @@ public class NormalStates implements QuantumState {
         {
             for(int j=i+1;(j<state.length) && flag;j++)
             {
-                if ((j % ((int) Math.pow(2, pos-1))) == (i % ((int) Math.pow(2, pos-1)))) {
-                    if((j / ((int) Math.pow(2, pos))) == (i / ((int) Math.pow(2, pos)))) {
+                if ((j % ((int) Math.pow(2, pos2-1))) == (i % ((int) Math.pow(2, pos2-1)))) {
+                    if((j / ((int) Math.pow(2, pos2))) == (i / ((int) Math.pow(2, pos2)))) {
                         if ( (state[i].abs()!=0) && (state[j].abs()!=0) )
                         {
                             temp[count] = state[i].divides(state[j]);
@@ -51,9 +51,30 @@ public class NormalStates implements QuantumState {
                             if(!temp[count].equal(temp[0]))
                                 flag = false;
                             count++;
-                        } else if((state[i].abs()!=0) || (state[j].abs()!=0))
-                        {
-                            flag = false;
+                        } else if((state[i].abs()==0) && (state[j].abs()!=0)) {
+                            for(int k=0;k<state.length;k++)
+                            {
+                                if(Measurement.isBitZero(i,pos,this.getParticles())==Measurement.isBitZero(k,pos,this.getParticles())) {
+                                    if (state[k].abs() != 0) {
+                                        return null;
+                                    }
+                                }
+                            }
+                            if(Measurement.isBitZero(i,pos,this.getParticles()))
+                                return new SingleParticle(new Complex(0,0),new Complex(1,0));
+                            return new SingleParticle(new Complex(1,0),new Complex(0,0));
+                        } else if((state[j].abs()==0) && (state[i].abs()!=0)) {
+                            for(int k=0;k<state.length;k++)
+                            {
+                                if(Measurement.isBitZero(j,pos,this.getParticles())==Measurement.isBitZero(k,pos,this.getParticles())) {
+                                    if (state[k].abs() != 0) {
+                                        return null;
+                                    }
+                                }
+                            }
+                            if(Measurement.isBitZero(j,pos,this.getParticles()))
+                                return new SingleParticle(new Complex(0,0),new Complex(1,0));
+                            return new SingleParticle(new Complex(1,0),new Complex(0,0));
                         }
                     }
                 }

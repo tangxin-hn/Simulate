@@ -93,7 +93,7 @@ public class Operators {
                 { times1 , new Complex(0,0) , sqrt1 , new Complex(0,0) },
                 { new Complex(0,0) , times2 , new Complex(0,0) , sqrt2 },
                 { new Complex(sqrt1.re(),sqrt1.im()) , new Complex(0,0) , conj1 , new Complex(0,0) },
-                { new Complex(0,0) , new Complex(sqrt1.re(),sqrt1.im()) , new Complex(0,0) , conj2 }
+                { new Complex(0,0) , new Complex(sqrt2.re(),sqrt2.im()) , new Complex(0,0) , conj2 }
         };
 
         return VS2;

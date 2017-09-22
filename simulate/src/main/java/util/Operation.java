@@ -26,7 +26,6 @@ public class Operation {
                     }
                 }
             }
-
         }
         return result;
     }
@@ -92,7 +91,7 @@ public class Operation {
 
         for (int i = 0; i < len; i++) {
             if(!(matrix[i].abs() < 0.00000000000001)){
-                matrix[i] = matrix[i].times(1/sum);
+                matrix[i] = matrix[i].divides(new Complex(sum,0));
             }
         }
 
@@ -125,11 +124,11 @@ public class Operation {
         c[1] = t;
     }
 
-    public static void GlobalPhase(QuantumState qs)
+    public static void GlobalPhase(Complex[] states)
     {
-        Complex[] states = qs.getState();
+        //Complex[] states = qs.getState();
         Complex zero = new Complex(0,0);
-        if(states[0].re()<-0.0000001){
+        if(states[0].re()<-0.000000000001){
             for(int i=0;i<states.length;i++)
             {
                 states[i] = zero.minus(states[i]);
