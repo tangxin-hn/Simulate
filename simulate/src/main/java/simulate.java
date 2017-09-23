@@ -3,14 +3,17 @@ import quantum.states.GHZState;
 import quantum.states.NormalStates;
 import quantum.states.SingleParticle;
 import util.*;
-
-import java.util.Scanner;
+//import java.util.Scanner;
 
 public class simulate {
-    public static void main(String[] args) {
-        int count = 0;
-        Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
-        Complex[] b = new Complex[]{new Complex(0, 0), new Complex(1, 0)};
+    public static String[] mysimulate(String a0, String b0, String a1, String b1) {
+        String[] output= new String[13];
+        Complex[] a = new Complex[]{StringTranslate.stringToComplex(a0), StringTranslate.stringToComplex(a1)};
+        Complex[] b = new Complex[]{StringTranslate.stringToComplex(b0), StringTranslate.stringToComplex(b1)};
+        getOutput(a,b,output);
+        //System.out.println(output[12]);
+        return output;
+        /**
         Scanner sc = new Scanner(System.in);
         String s = "";
         for(int i=0;i<2;i++) {
@@ -23,31 +26,45 @@ public class simulate {
             s = sc.nextLine();  //读取字符串型输入
             b[i] = StringTranslate.stringToComplex(s);
         }
-        while(true){
-            count++;
-            if(mygo(a,b)==0) {
-                System.out.println("count: " + count);
-                count = 0;
-                System.out.println("again?(y/n)");
-                s = sc.nextLine();  //读取字符串型输入
-                if (!s.equals("y"))
-                    break;
+         */
+    }
 
-                for(int i=0;i<2;i++) {
-                    System.out.println("input" + (i+1) + ": ");
-                    s = sc.nextLine();  //读取字符串型输入
-                    a[i] = StringTranslate.stringToComplex(s);
-                }
-                for(int i=0;i<2;i++) {
-                    System.out.println("input" + (i+3) + ": ");
-                    s = sc.nextLine();  //读取字符串型输入
-                    b[i] = StringTranslate.stringToComplex(s);
-                }
+    public static void getOutput(Complex[] a, Complex b[], String[] output)
+    {
+        int count = 0;
+        while(true){
+            for(int i=0;i<12;i++)
+            {
+                output[i] = "-";
+            }
+            count++;
+            if(mygo(a,b,output)==0) {
+                /**
+                 System.out.println("count: " + count);
+                 count = 0;
+                 System.out.println("again?(y/n)");
+                 s = sc.nextLine();  //读取字符串型输入
+                 if (!s.equals("y"))
+                 break;
+
+                 for(int i=0;i<2;i++) {
+                 System.out.println("input" + (i+1) + ": ");
+                 s = sc.nextLine();  //读取字符串型输入
+                 a[i] = StringTranslate.stringToComplex(s);
+                 }
+                 for(int i=0;i<2;i++) {
+                 System.out.println("input" + (i+3) + ": ");
+                 s = sc.nextLine();  //读取字符串型输入
+                 b[i] = StringTranslate.stringToComplex(s);
+                 }
+                 */
+                output[12] = String.valueOf(count);
+                break;
             }
         }
     }
 
-    public static int mygo (Complex[] a, Complex b[]) {
+    public static int mygo (Complex[] a, Complex b[], String[] output) {
         /**
         //初始化协议
         Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
@@ -69,17 +86,30 @@ public class simulate {
         Complex[] ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
         Operation.normalization(a);
         Operation.normalization(b);
+        Operation.normalization(ab);
         if( (ab[0].abs()==0) && (ab[1].abs()==0) ) {
+            /**
             System.out.println("Expect φ2: " + StringTranslate.statesToString(new SingleParticle(a[0],a[1])));
             System.out.println("Expect φ5: " + StringTranslate.statesToString(new SingleParticle(b[0],b[1])));
             System.out.println("");
+            */
+            SingleParticle sp2 = new SingleParticle(a[0],a[1]);
+            SingleParticle sp5 = new SingleParticle(b[0],b[1]);
+            Operation.GlobalPhase(sp2.getState());
+            Operation.GlobalPhase(sp5.getState());
+            output[0] = StringTranslate.statesToString(sp2);
+            output[1] = StringTranslate.statesToString(sp5);
         } else {
-            Operation.normalization(ab);
-            Operation.GlobalPhase(ab);
             SingleParticle sp = new SingleParticle(ab[0],ab[1]);
+
+            /**
             System.out.println("Expect φ2: " + StringTranslate.statesToString(sp));
             System.out.println("Expect φ5: " + StringTranslate.statesToString(sp));
             System.out.println("");
+             */
+            Operation.GlobalPhase(sp.getState());
+            output[0] = StringTranslate.statesToString(sp);
+            output[1] = StringTranslate.statesToString(sp);
         }
 
         SingleParticle A1 = new SingleParticle(a[0], a[1]);
@@ -114,11 +144,17 @@ public class simulate {
         SingleParticle SP2_1 = NS1.getSingleParticle(3);
         SingleParticle SP5_1 = NS2.getSingleParticle(3);
 
+        Operation.GlobalPhase(SP2_1.getState());
+        Operation.GlobalPhase(SP5_1.getState());
+        /**
         //第一次输出
         System.out.println("φ2_1: " + StringTranslate.statesToString(SP2_1));
         System.out.println("φ5_1: " + StringTranslate.statesToString(SP5_1));
         System.out.println("");
         //NEXT();
+        */
+        output[2] = StringTranslate.statesToString(SP2_1);
+        output[3] = StringTranslate.statesToString(SP5_1);
 
         SingleParticle SP2_2=null;
         SingleParticle SP5_2=null;
@@ -148,36 +184,58 @@ public class simulate {
             NS_5.setState(temp1);
             NS_2.setState(temp2);
 
+            Operation.GlobalPhase(NS_2.getState());
+            Operation.GlobalPhase(NS_5.getState());
+            /**
             //第二次输出
             System.out.println("φ2_2: " + StringTranslate.statesToString(NS_2));
             System.out.println("φ5_2: " + StringTranslate.statesToString(NS_5));
             System.out.println("");
             //NEXT();
+             */
+            output[4] = StringTranslate.statesToString(NS_2);
+            output[5]= StringTranslate.statesToString(NS_5);
 
             //3.对aux测量，根据结果计算
             int[] aux = {Measurement.measureBaseZ(NS_2, 2),Measurement.measureBaseZ(NS_5, 2)};
-            if((ab[0].abs()==0) && (ab[1].abs()==0) ){
+            if((ab[0].abs()<0.0000000000001) && (ab[1].abs()<0.00000000001) ){
                 //SP2_2 = new SingleParticle(new Complex(1-aux[0],0),new Complex(aux[0],0));
                 //SP5_2 = new SingleParticle(new Complex(1-aux[1],0),new Complex(aux[1],0));
                 SP2_2 = NS_2.getSingleParticle(1);
                 SP5_2 = NS_5.getSingleParticle(1);
+
+                Operation.GlobalPhase(SP2_2.getState());
+                Operation.GlobalPhase(SP5_2.getState());
+                /**
                 //第三次输出
                 System.out.println("φ2_3: " + StringTranslate.statesToString(SP2_2));
                 System.out.println("φ5_3: " + StringTranslate.statesToString(SP5_2));
                 System.out.println("");
                 //NEXT();
+                 */
+                output[6] = StringTranslate.statesToString(SP2_2);
+                output[7] = StringTranslate.statesToString(SP5_2);
+
             } else {
                 if ((aux[0] == 0) && (aux[1] == 0)) {
                     SP2_2 = NS_2.getSingleParticle(1);
                     SP5_2 = NS_5.getSingleParticle(1);
+
+                    Operation.GlobalPhase(SP2_2.getState());
+                    Operation.GlobalPhase(SP5_2.getState());
+                    /**
                     //第三次输出
                     System.out.println(StringTranslate.statesToString(SP2_2));
                     System.out.println(StringTranslate.statesToString(SP5_2));
                     System.out.println("4");
                     //NEXT();
+                    */
+                    output[6] = StringTranslate.statesToString(SP2_2);
+                    output[7] = StringTranslate.statesToString(SP5_2);
+
                 } else {
-                    System.out.println("failure");
-                    System.out.println();
+                    //System.out.println("failure");
+                    //System.out.println();
                     return -1;
                 }
             }
@@ -192,11 +250,17 @@ public class simulate {
         SP5_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t1, m[2][2]), Operation.transposition(SP5_2.getState()))));
         SP2_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t2, m[1][1]), Operation.transposition(SP2_2.getState()))));
 
+        Operation.GlobalPhase(SP2_2.getState());
+        Operation.GlobalPhase(SP5_2.getState());
+        /**
         //第四次输出
         System.out.println("φ2_4: " + StringTranslate.statesToString(SP2_2));
         System.out.println("φ5_4: " + StringTranslate.statesToString(SP5_2));
         System.out.println("");
         //NEXT();
+        */
+        output[8] = StringTranslate.statesToString(SP2_2);
+        output[9] = StringTranslate.statesToString(SP5_2);
 
         //4.r1，r2执行操作
         SP5_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(n[1][1]^n[2][2],0),Operation.transposition(SP5_2.getState()))));
@@ -205,20 +269,25 @@ public class simulate {
 
         Operation.GlobalPhase(SP2_2.getState());
         Operation.GlobalPhase(SP5_2.getState());
-        //第五次输出
+        /**第五次输出
         System.out.println("φ2_5: " + StringTranslate.statesToString(SP2_2));
         System.out.println("φ5_5: " + StringTranslate.statesToString(SP5_2));
         System.out.println("");
         //NEXT();
+         */
+        output[10] = StringTranslate.statesToString(SP2_2);
+        output[11]= StringTranslate.statesToString(SP5_2);
 
+        /**
         System.out.println("complete");
         System.out.println();
+        System.out.println("5final:" + SP2_2.getState()[0].toString() + "|0>" + SP2_2.getState()[1].toString() + "|1>");
+        System.out.println("5final:" + SP5_2.getState()[0].toString() + "|0>" + SP5_2.getState()[1].toString() + "|1>");
+        */
 
-        //System.out.println("5final:" + SP2_2.getState()[0].toString() + "|0>" + SP2_2.getState()[1].toString() + "|1>");
-        //System.out.println("5final:" + SP5_2.getState()[0].toString() + "|0>" + SP5_2.getState()[1].toString() + "|1>");
-        return 0;
+         return 0;
     }
-
+    /**
     public static void NEXT(){
         Scanner sc = new Scanner(System.in);
         String s = "";
@@ -227,4 +296,6 @@ public class simulate {
             s = sc.nextLine();  //读取字符串型输入
         }while(!s.equals("y"));
     }
+    */
+
 }

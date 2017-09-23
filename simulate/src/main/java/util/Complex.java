@@ -148,7 +148,7 @@ public class Complex
 
     public boolean equal(Complex a)
     {
-        if( (this.re==a.re) && (this.im==a.im) )
+        if( Math.abs(this.re-a.re)<0.00000000000001 && Math.abs(this.im-a.im)<0.00000000000001 )
         {
             return true;
         }
