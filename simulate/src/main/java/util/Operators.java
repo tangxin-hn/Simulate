@@ -51,8 +51,8 @@ public class Operators {
             xor2=0;
         times1=a[xor1].times(a[m2]);
         times2=a[m1].times(a[xor2]);
-        sqrt1=new Complex(Math.sqrt(1-times1.abs()*times1.abs()),0);
-        sqrt2=new Complex(Math.sqrt(1-times2.abs()*times2.abs()),0);
+        sqrt1=new Complex(Math.sqrt(Math.abs(1-times1.abs()*times1.abs())),0);
+        sqrt2=new Complex(Math.sqrt(Math.abs(1-times2.abs()*times2.abs())),0);
         Complex zero=new Complex(0,0);
         conj1=zero.minus(times1.conjugate());
         conj2=zero.minus(times2.conjugate());
@@ -84,8 +84,8 @@ public class Operators {
             xor2=0;
         times1=b[xor1].times(b[m2]);
         times2=b[m1].times(b[xor2]);
-        sqrt1=new Complex(Math.sqrt(1-times1.abs()*times1.abs()),0);
-        sqrt2=new Complex(Math.sqrt(1-times2.abs()*times2.abs()),0);
+        sqrt1=new Complex(Math.sqrt(Math.abs(1-times1.abs()*times1.abs())),0);
+        sqrt2=new Complex(Math.sqrt(Math.abs(1-times2.abs()*times2.abs())),0);
         Complex zero=new Complex(0,0);
         conj1=zero.minus(times1.conjugate());
         conj2=zero.minus(times2.conjugate());

@@ -84,10 +84,14 @@ public class simulate {
         }
         */
         Complex[] ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
-        Operation.normalization(a);
-        Operation.normalization(b);
-        Operation.normalization(ab);
-        if( (ab[0].abs()==0) && (ab[1].abs()==0) ) {
+        Operation.GlobalPhase(a);
+        Operation.GlobalPhase(b);
+        //Operation.normalization(a);
+        //Operation.normalization(b);
+        Operation.GlobalPhase(ab);
+        //Operation.normalization(ab);
+
+        if( (ab[0].abs()<0.00000000001) && (ab[1].abs()<0.00000000001) ) {
             /**
             System.out.println("Expect φ2: " + StringTranslate.statesToString(new SingleParticle(a[0],a[1])));
             System.out.println("Expect φ5: " + StringTranslate.statesToString(new SingleParticle(b[0],b[1])));
@@ -95,8 +99,6 @@ public class simulate {
             */
             SingleParticle sp2 = new SingleParticle(a[0],a[1]);
             SingleParticle sp5 = new SingleParticle(b[0],b[1]);
-            Operation.GlobalPhase(sp2.getState());
-            Operation.GlobalPhase(sp5.getState());
             output[0] = StringTranslate.statesToString(sp2);
             output[1] = StringTranslate.statesToString(sp5);
         } else {
@@ -107,7 +109,6 @@ public class simulate {
             System.out.println("Expect φ5: " + StringTranslate.statesToString(sp));
             System.out.println("");
              */
-            Operation.GlobalPhase(sp.getState());
             output[0] = StringTranslate.statesToString(sp);
             output[1] = StringTranslate.statesToString(sp);
         }
@@ -146,6 +147,7 @@ public class simulate {
 
         Operation.GlobalPhase(SP2_1.getState());
         Operation.GlobalPhase(SP5_1.getState());
+        //Operation.normalization(ab);
         /**
         //第一次输出
         System.out.println("φ2_1: " + StringTranslate.statesToString(SP2_1));
@@ -297,5 +299,4 @@ public class simulate {
         }while(!s.equals("y"));
     }
     */
-
 }

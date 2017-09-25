@@ -151,12 +151,12 @@ public class Show extends JFrame {
 		label_1.setBounds(10, 157, 159, 32);
 		frame.getContentPane().add(label_1);
 
-		JLabel lblAb = new JLabel("a0*b0");
+		JLabel lblAb = new JLabel("\u04242");
 		lblAb.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		lblAb.setBounds(179, 162, 58, 23);
 		frame.getContentPane().add(lblAb);
 
-		JLabel lblAb_1 = new JLabel("a1*b1");
+		JLabel lblAb_1 = new JLabel("\u04245");
 		lblAb_1.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		lblAb_1.setBounds(179, 202, 58, 23);
 		frame.getContentPane().add(lblAb_1);

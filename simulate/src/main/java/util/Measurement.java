@@ -23,6 +23,7 @@ public class Measurement {
         }
         double random = Math.random();
         int result = 0;
+        //System.out.println(random);
         if(random < zeroProb)
             result = 0;
         else

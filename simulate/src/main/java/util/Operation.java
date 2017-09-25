@@ -128,6 +128,21 @@ public class Operation {
     {
         //Complex[] states = qs.getState();
         Complex zero = new Complex(0,0);
+
+        Complex temp = new Complex(1,0);
+        boolean flag = false;
+        for(int i=0;i<states.length;i++){
+            if(states[i].abs()>0.0000000001) {
+                if(flag==false) {
+                    temp = new Complex(states[i].re(), states[i].im());
+                    states[i] = new Complex(1,0);
+                    flag = true;
+                } else{
+                    states[i] = states[i].divides(temp);
+                }
+            }
+        }
+
         for(int i=0;i<states.length;i++){
             if(states[i].abs()>0.0000000001){
                 if(states[i].re()<-0.000000000001){
@@ -148,5 +163,6 @@ public class Operation {
                 break;
             }
         }
+        normalization(states);
     }
 }
