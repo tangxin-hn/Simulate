@@ -1,3 +1,6 @@
+package GUI;
+
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -39,10 +42,15 @@ public class End extends JFrame {
 		frame.setTitle("");
 		frame.getContentPane().setLayout(null);
 
-		JLabel label = new JLabel("由于协议为概率性，其一次成功概率为。因此为使协议成功，共执行了"+Show.outstr+"次");
+		JLabel label = new JLabel("由于协议为概率性，其一次成功概率为"+Show.prob+"。");
 		label.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-		label.setBounds(40, 100, 600, 50);
+		label.setBounds(70, 45, 500, 50);
 		frame.getContentPane().add(label);
+
+		JLabel lblNewLabel = new JLabel("因此为使协议成功，共执行了"+Show.outstr+"次。");
+		lblNewLabel.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+		lblNewLabel.setBounds(100, 126, 500, 36);
+		frame.getContentPane().add(lblNewLabel);
 
 	}
 }

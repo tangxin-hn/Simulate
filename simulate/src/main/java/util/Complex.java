@@ -19,8 +19,8 @@ public class Complex
 
         if (im == 0) return String.format("%.4f", re) + "";
         if (re == 0) return String.format("%.4f", im) + "i";
-        if (im <  0) return String.format("%.4f", re) + " - " + String.format("%.4f", -im) + "i";
-        return String.format("%.4f", re) + " + " + String.format("%.4f", im) + "i";
+        if (im <  0) return String.format("%.4f", re) + "-" + String.format("%.4f", -im) + "i";
+        return String.format("%.4f", re) + "+" + String.format("%.4f", im) + "i";
     }
 
     // return abs/modulus/magnitude and angle/phase/argument
