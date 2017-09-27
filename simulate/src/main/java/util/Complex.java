@@ -1,5 +1,7 @@
 package util;
 
+import java.util.regex.Pattern;
+
 public class Complex
 {
     private final double re;   // the real part
@@ -152,6 +154,20 @@ public class Complex
         {
             return true;
         }
+        return false;
+    }
+
+    public static boolean isComplex(String s) {
+        if(s == null)
+            return false;
+        if(s == "")
+            return false;
+        String pattern1 = "^([-+]?\\d+(\\.\\d+)?)?([-+]?\\d+(\\.\\d+)?i)?$";
+        String pattern2 = "^.*\\.[0-9]*\\..*$";
+        boolean isMatch1 = Pattern.matches(pattern1, s);
+        boolean isMatch2 = Pattern.matches(pattern2, s);
+        if (isMatch1 && !isMatch2)
+            return true;
         return false;
     }
 }

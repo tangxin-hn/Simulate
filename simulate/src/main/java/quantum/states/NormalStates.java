@@ -87,7 +87,7 @@ public class NormalStates implements QuantumState {
         if(flag==true && count>0)
         {
             Complex[] temp_2 = new Complex[]{temp1,temp2};
-            Operation.normalization(temp_2);
+            //Operation.normalization(temp_2);
             SP = new SingleParticle(temp_2[0],temp_2[1]);
         }
         return SP;

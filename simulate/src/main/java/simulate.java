@@ -5,14 +5,71 @@ import quantum.states.SingleParticle;
 import util.*;
 //import java.util.Scanner;
 
-public class simulate {
-    public static String[] mysimulate(String a0, String b0, String a1, String b1) {
-        String[] output= new String[13];
+public class Simulate {
+    private String[] output = new String[13];
+    private String[][] measurementResult = new String[2][2];
+    private String[][] stringVS1 = new String[4][4];
+    private String[][] stringVS2 = new String[4][4];
+    private String[][] S1P = new String[2][2];
+    private String[][] S2P = new String[2][2];
+    private String[][] R1P = new String[2][2];
+    private String[][] R2P = new String[2][2];
+    private Complex[] a;
+    private Complex[] b;
+    private Complex[] ab;
+    private double prob;
+
+    //获取测量结果，51,21后的四个框
+    public String[][] getMeasurementResult() {
+        return measurementResult;
+    }
+    //获取输出，一开始的13个框
+    public String[] getOutput() {
+        return output;
+    }
+    //获取r1的pauli阵
+    public String[][] getR1P() {
+        return R1P;
+    }
+    //获取r2的pauli阵
+    public String[][] getR2P() {
+        return R2P;
+    }
+    //获取s1的pauli阵
+    public String[][] getS1P() {
+        return S1P;
+    }
+    //获取s2的pauli阵
+    public String[][] getS2P() {
+        return S2P;
+    }
+    //获取矩阵VS1
+    public String[][] getStringVS1() {
+        return stringVS1;
+    }
+    //获取矩阵VS2
+    public String[][] getStringVS2() {
+        return stringVS2;
+    }
+    //获取成功概率
+    public String getProb() {
+        return String.format("%.4f", prob);
+    }
+
+    /**
+    public Simulate(String a0, String b0, String a1, String b1) {
+        a = new Complex[]{StringTranslate.stringToComplex(a0),
+                StringTranslate.stringToComplex(a1)};
+        b = new Complex[]{StringTranslate.stringToComplex(b0),
+                StringTranslate.stringToComplex(b1)};
+    }
+    public String[] mysimulate(String a0, String b0, String a1, String b1) {
+        Simulate simulate = new Simulate(a0, b0, a1, b1);
         Complex[] a = new Complex[]{StringTranslate.stringToComplex(a0), StringTranslate.stringToComplex(a1)};
         Complex[] b = new Complex[]{StringTranslate.stringToComplex(b0), StringTranslate.stringToComplex(b1)};
-        getOutput(a,b,output);
+        simulate.getOutput(a,b);
         //System.out.println(output[12]);
-        return output;
+        return this.output;
         /**
         Scanner sc = new Scanner(System.in);
         String s = "";
@@ -26,19 +83,55 @@ public class simulate {
             s = sc.nextLine();  //读取字符串型输入
             b[i] = StringTranslate.stringToComplex(s);
         }
-         */
+         *
+    }
+*/
+    private void restore() {
+        for(int i=0;i<12;i++)
+        {
+            output[i] = "-";
+        }
+        for(int i=0;i<4;i++) {
+            for(int j=0;i<4;i++) {
+                stringVS1[i][j] = "-";
+                stringVS2[i][j] = "-";
+            }
+        }
+        for(int i=0;i<2;i++) {
+            for(int j=0;i<2;i++) {
+                S1P[i][j] = "-";
+                S2P[i][j] = "-";
+                R1P[i][j] = "-";
+                R2P[i][j] = "-";
+            }
+        }
+    }
+    //计算成功概率
+    private void setProb(){
+        double res=0;
+        Complex a0=a[0];
+        Complex a1=a[1];
+        Complex b0=b[0];
+        Complex b1=b[1];
+        double x1,x2,x3,x4;
+        x1=Math.pow(a0.times(b0).abs(),2.0);
+        x2=Math.pow(a1.times(b1).abs(),2.0);
+        x3=Math.pow(b0.times(b1).abs(),2.0);
+        x4=Math.pow(a0.times(a1).abs(),2.0);
+        res=Math.pow((x1+x2),2.0)*(1+x3)*(1.0+x4);
+        prob = res;
     }
 
-    public static void getOutput(Complex[] a, Complex b[], String[] output)
+    //c传入参数运行一次得到结果
+    public void mySimulate(String a0, String b0, String a1, String b1)
     {
+        a = new Complex[]{StringTranslate.stringToComplex(a0), StringTranslate.stringToComplex(a1)};
+        b = new Complex[]{StringTranslate.stringToComplex(b0), StringTranslate.stringToComplex(b1)};
         int count = 0;
         while(true){
-            for(int i=0;i<12;i++)
-            {
-                output[i] = "-";
-            }
+            restore();
             count++;
-            if(mygo(a,b,output)==0) {
+            if(mygo()==0) {
                 /**
                  System.out.println("count: " + count);
                  count = 0;
@@ -59,12 +152,14 @@ public class simulate {
                  }
                  */
                 output[12] = String.valueOf(count);
+                setProb();
+                //System.out.println(prob);
                 break;
             }
         }
     }
 
-    public static int mygo (Complex[] a, Complex b[], String[] output) {
+    public int mygo () {
         /**
         //初始化协议
         Complex[] a = new Complex[]{new Complex(1, 0), new Complex(0, 0)};
@@ -83,7 +178,7 @@ public class simulate {
             b[i] = StringTranslate.stringToComplex(s);
         }
         */
-        Complex[] ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
+        ab = new Complex[]{a[0].times(b[0]), a[1].times(b[1])};
         Operation.GlobalPhase(a);
         Operation.GlobalPhase(b);
         //Operation.normalization(a);
@@ -134,6 +229,7 @@ public class simulate {
         result[0][1] = Measurement.measureBaseBell(NS1, 4, 5);
         result[1][0] = Measurement.measureBaseBell(NS2, 1, 2);
         result[1][1] = Measurement.measureBaseBell(NS2, 4, 5);
+        measurementResult = StringTranslate.intToString(result);
         for(int i=0;i<2;i++)
         {
             for(int j=0;j<2;j++)
@@ -164,6 +260,8 @@ public class simulate {
             //2.酉操作
             Complex[][] VS1 = Operators.Operator_VS1(a, m);
             Complex[][] VS2 = Operators.Operator_VS2(b, m);
+            stringVS1 = StringTranslate.complexToString(VS1);
+            stringVS2 = StringTranslate.complexToString(VS2);
             Complex[][] C1 = Operation.transposition(new ComputaionState(0).getState());
             Complex[] st5_1 = Operation.vecToArray(Operation.operatorTensor(Operation.transposition(SP5_1.getState()),C1));
             Complex[] st2_1 = Operation.vecToArray(Operation.operatorTensor(Operation.transposition(SP2_1.getState()),C1));
@@ -249,8 +347,11 @@ public class simulate {
 
         int t1 = n[1][1] ^ n[1][2];
         int t2 = n[2][1] ^ n[2][2];
-        SP5_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t1, m[2][2]), Operation.transposition(SP5_2.getState()))));
+        S1P = StringTranslate.complexToString(Operators.Operator_P(t2, m[1][1]));
+        S2P = StringTranslate.complexToString(Operators.Operator_P(t1, m[2][2]));
         SP2_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t2, m[1][1]), Operation.transposition(SP2_2.getState()))));
+        SP5_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t1, m[2][2]), Operation.transposition(SP5_2.getState()))));
+
 
         Operation.GlobalPhase(SP2_2.getState());
         Operation.GlobalPhase(SP5_2.getState());
@@ -265,6 +366,8 @@ public class simulate {
         output[9] = StringTranslate.statesToString(SP5_2);
 
         //4.r1，r2执行操作
+        R1P = StringTranslate.complexToString(Operators.Operator_P(n[1][1]^n[2][2],0));
+        R2P = StringTranslate.complexToString(Operators.Operator_P(n[1][1]^n[2][2],0));
         SP5_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(n[1][1]^n[2][2],0),Operation.transposition(SP5_2.getState()))));
         SP2_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(n[1][1]^n[2][2],0),Operation.transposition(SP2_2.getState()))));
 

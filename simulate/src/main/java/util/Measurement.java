@@ -10,10 +10,12 @@ public class Measurement {
 
     public static int measureBaseZ(QuantumState state, int pos){
         Complex[] states = state.getState();
+        double sum = 0;
 
         double zeroProb = 0.0;
         double oneProb = 0.0;
         for (int i = 0; i < states.length; i++) {
+            sum += Math.pow(states[i].abs(),2);
             if(isBitOne(i,pos,state.getParticles())){
                 oneProb += Math.pow(states[i].abs(),2);
             }else {
@@ -21,7 +23,7 @@ public class Measurement {
             }
 
         }
-        double random = Math.random();
+        double random = Math.random() * sum;
         int result = 0;
         //System.out.println(random);
         if(random < zeroProb)
@@ -44,7 +46,7 @@ public class Measurement {
             }
         }
 
-        Operation.normalization(states);
+        //Operation.normalization(states);
 
         return result;
     }

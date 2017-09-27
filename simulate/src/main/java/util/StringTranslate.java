@@ -129,4 +129,30 @@ public class StringTranslate {
         }
         return  new Complex(re,im);
     }
+
+    public static String[][] complexToString(Complex[][] complex){
+        int row = complex.length;
+        int col = complex[0].length;
+        String[][] s = new String[row][col];
+        for(int i=0;i<row;i++) {
+            for(int j=0;j<col;j++) {
+                s[i][j] = complex[i][j].toString();
+            }
+        }
+        return s;
+    }
+
+    public static String[][] intToString(int[][] num) {
+        int row = num.length;
+        int col = num[0].length;
+        String[][] s = new String[row][col];
+        for(int i=0;i<row;i++) {
+            for(int j=0;j<col;j++) {
+                int t1 = (num[i][j]%4)/2;
+                int t2 = num[i][j]%2;
+                s[i][j] = "ψ" + String.valueOf(t1) + String.valueOf(t2);
+            }
+        }
+        return s;
+    }
 }

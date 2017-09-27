@@ -146,7 +146,7 @@ public class Show extends JFrame {
 		frame.getContentPane().add(btnNewButton_1);
 
 		JLabel label_1 = new JLabel(
-				"\u5F52\u4E00\u5316\u540E\u9884\u8BA1\u7ED3\u679C\uFF1A");
+				"\u9884\u8BA1\u7ED3\u679C\uFF1A");//归一化后预计结果：
 		label_1.setFont(new Font("微软雅黑", Font.PLAIN, 17));
 		label_1.setBounds(10, 157, 159, 32);
 		frame.getContentPane().add(label_1);
@@ -308,9 +308,9 @@ public class Show extends JFrame {
 				String b1 = textField_3.getText();
 
 				// 这里设置str00和str11的值
-
-				s=simulate.mysimulate(a0, b0, a1, b1);
-
+				Simulate sim = new Simulate();
+				sim.mySimulate(a0, b0, a1, b1);
+				s=sim.getOutput();
 				textField_4.setText(s[0]);
 				textField_5.setText(s[1]);
 			}
