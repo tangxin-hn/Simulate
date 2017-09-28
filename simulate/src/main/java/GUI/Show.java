@@ -361,6 +361,11 @@ public class Show extends JFrame {
 					textField_14.setText("");
 					textField_10.setText("");
 					textField_15.setText("");
+
+					textField_16.setText("");
+					textField_17.setText("");
+					textField_18.setText("");
+					textField_19.setText("");
 				}
 
 				String a0 = textField.getText();

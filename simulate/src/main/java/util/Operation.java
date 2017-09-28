@@ -1,6 +1,7 @@
 package util;
 
 import quantum.QuantumState;
+import quantum.states.SingleParticle;
 
 /**
  * Created by Zhao Zhe on 2017/9/9.
@@ -164,5 +165,23 @@ public class Operation {
             }
         }
         normalization(states);
+    }
+
+    public static void sameGloblePhase(SingleParticle sp1, SingleParticle sp2){
+        Complex[] st1 = sp1.getState();
+        Complex[] st2 = sp2.getState();
+        if(st2[0].abs()>0.00000000001) {
+            if(st1[0].plus(st2[0]).abs()<0.00000000001) {
+                Complex t = new Complex(0,0);
+                st1[0] = t.minus(st1[0]);
+                st1[1] = t.minus(st1[1]);
+            }
+        } else {
+            if(st1[1].plus(st2[1]).abs()<0.00000000001) {
+                Complex t = new Complex(0,0);
+                st1[0] = t.minus(st1[0]);
+                st1[1] = t.minus(st1[1]);
+            }
+        }
     }
 }

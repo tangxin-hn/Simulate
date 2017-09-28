@@ -39,7 +39,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Show</mainClass>
+                            <mainClass>GUI.Show</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

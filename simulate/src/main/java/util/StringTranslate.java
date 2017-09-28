@@ -12,7 +12,7 @@ public class StringTranslate {
         sb=sb.reverse();
         return sb.toString();
     }
-    public static String statesToString(QuantumState qs){
+    public static String statesToString(QuantumState qs, double b){
         Complex[] st = qs.getState();
         int num = qs.getParticles();
         int length;
@@ -29,7 +29,7 @@ public class StringTranslate {
                 str = intToBits(i, num);
                 sb.append("(");
                 //System.out.println(i);
-                sb.append(st[i].toString());
+                sb.append(st[i].times(b).toString());
                 sb.append(")|");
                 sb.append(str);
                 sb.append(">");

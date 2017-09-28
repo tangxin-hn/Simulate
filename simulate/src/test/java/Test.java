@@ -31,15 +31,15 @@ public class Test {
         Operation.normalization(a);
         Operation.normalization(b);
         if( (ab[0].abs()==0) && (ab[1].abs()==0) ) {
-            System.out.println("Expect φ2: " + StringTranslate.statesToString(new SingleParticle(a[0],a[1])));
-            System.out.println("Expect φ5: " + StringTranslate.statesToString(new SingleParticle(b[0],b[1])));
+            System.out.println("Expect φ2: " + StringTranslate.statesToString(new SingleParticle(a[0],a[1]),1));
+            System.out.println("Expect φ5: " + StringTranslate.statesToString(new SingleParticle(b[0],b[1]),1));
             System.out.println("1");
         } else {
             Operation.normalization(ab);
             Operation.GlobalPhase(ab);
             SingleParticle sp = new SingleParticle(ab[0],ab[1]);
-            System.out.println("Expect φ2: " + StringTranslate.statesToString(sp));
-            System.out.println("Expect φ5: " + StringTranslate.statesToString(sp));
+            System.out.println("Expect φ2: " + StringTranslate.statesToString(sp,1));
+            System.out.println("Expect φ5: " + StringTranslate.statesToString(sp,1));
             System.out.println("");
         }
 
@@ -76,8 +76,8 @@ public class Test {
         SingleParticle SP5_1 = NS2.getSingleParticle(3);
 
         //第一次输出
-        System.out.println("φ2_1: " + StringTranslate.statesToString(SP2_1));
-        System.out.println("φ5_1: " + StringTranslate.statesToString(SP5_1));
+        System.out.println("φ2_1: " + StringTranslate.statesToString(SP2_1,1));
+        System.out.println("φ5_1: " + StringTranslate.statesToString(SP5_1,1));
         System.out.println("");
         //NEXT();
 
@@ -110,8 +110,8 @@ public class Test {
             NS_2.setState(temp2);
 
             //第二次输出
-            System.out.println("φ2_2: " + StringTranslate.statesToString(NS_2));
-            System.out.println("φ5_2: " + StringTranslate.statesToString(NS_5));
+            System.out.println("φ2_2: " + StringTranslate.statesToString(NS_2,1));
+            System.out.println("φ5_2: " + StringTranslate.statesToString(NS_5,1));
             System.out.println("");
             //NEXT();
 
@@ -123,8 +123,8 @@ public class Test {
                 SP2_2 = NS_2.getSingleParticle(1);
                 SP5_2 = NS_5.getSingleParticle(1);
                 //第三次输出
-                System.out.println("φ2_3: " + StringTranslate.statesToString(SP2_2));
-                System.out.println("φ5_3: " + StringTranslate.statesToString(SP5_2));
+                System.out.println("φ2_3: " + StringTranslate.statesToString(SP2_2,1));
+                System.out.println("φ5_3: " + StringTranslate.statesToString(SP5_2,1));
                 System.out.println("");
                 //NEXT();
             } else {
@@ -132,8 +132,8 @@ public class Test {
                     SP2_2 = NS_2.getSingleParticle(1);
                     SP5_2 = NS_5.getSingleParticle(1);
                     //第三次输出
-                    System.out.println(StringTranslate.statesToString(SP2_2));
-                    System.out.println(StringTranslate.statesToString(SP5_2));
+                    System.out.println(StringTranslate.statesToString(SP2_2,1));
+                    System.out.println(StringTranslate.statesToString(SP5_2,1));
                     System.out.println("4");
                     //NEXT();
                 } else {
@@ -153,8 +153,8 @@ public class Test {
         SP2_2.setState(Operation.vecToArray(Operation.innerProduct(Operators.Operator_P(t2, m[1][1]), Operation.transposition(SP2_2.getState()))));
 
         //第四次输出
-        System.out.println("φ2_4: " + StringTranslate.statesToString(SP2_2));
-        System.out.println("φ5_4: " + StringTranslate.statesToString(SP5_2));
+        System.out.println("φ2_4: " + StringTranslate.statesToString(SP2_2,1));
+        System.out.println("φ5_4: " + StringTranslate.statesToString(SP5_2,1));
         System.out.println("");
         //NEXT();
 
@@ -166,8 +166,8 @@ public class Test {
         Operation.GlobalPhase(SP2_2.getState());
         Operation.GlobalPhase(SP5_2.getState());
         //第五次输出
-        System.out.println("φ2_5: " + StringTranslate.statesToString(SP2_2));
-        System.out.println("φ5_5: " + StringTranslate.statesToString(SP5_2));
+        System.out.println("φ2_5: " + StringTranslate.statesToString(SP2_2,1));
+        System.out.println("φ5_5: " + StringTranslate.statesToString(SP5_2,1));
         System.out.println("");
         //NEXT();
 

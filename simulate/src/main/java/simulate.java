@@ -194,8 +194,8 @@ public class Simulate {
             */
             SingleParticle sp2 = new SingleParticle(a[0],a[1]);
             SingleParticle sp5 = new SingleParticle(b[0],b[1]);
-            output[0] = StringTranslate.statesToString(sp2);
-            output[1] = StringTranslate.statesToString(sp5);
+            output[0] = StringTranslate.statesToString(sp2,1);
+            output[1] = StringTranslate.statesToString(sp5,1);
         } else {
             SingleParticle sp = new SingleParticle(ab[0],ab[1]);
 
@@ -204,8 +204,8 @@ public class Simulate {
             System.out.println("Expect φ5: " + StringTranslate.statesToString(sp));
             System.out.println("");
              */
-            output[0] = StringTranslate.statesToString(sp);
-            output[1] = StringTranslate.statesToString(sp);
+            output[0] = StringTranslate.statesToString(sp,1);
+            output[1] = StringTranslate.statesToString(sp,1);
         }
 
         SingleParticle A1 = new SingleParticle(a[0], a[1]);
@@ -251,8 +251,8 @@ public class Simulate {
         System.out.println("");
         //NEXT();
         */
-        output[2] = StringTranslate.statesToString(SP2_1);
-        output[3] = StringTranslate.statesToString(SP5_1);
+        output[2] = StringTranslate.statesToString(SP2_1,1);
+        output[3] = StringTranslate.statesToString(SP5_1,1);
 
         SingleParticle SP2_2=null;
         SingleParticle SP5_2=null;
@@ -293,8 +293,8 @@ public class Simulate {
             System.out.println("");
             //NEXT();
              */
-            output[4] = StringTranslate.statesToString(NS_2);
-            output[5]= StringTranslate.statesToString(NS_5);
+            output[4] = StringTranslate.statesToString(NS_2,1);
+            output[5]= StringTranslate.statesToString(NS_5,1);
 
             //3.对aux测量，根据结果计算
             int[] aux = {Measurement.measureBaseZ(NS_2, 2),Measurement.measureBaseZ(NS_5, 2)};
@@ -313,8 +313,8 @@ public class Simulate {
                 System.out.println("");
                 //NEXT();
                  */
-                output[6] = StringTranslate.statesToString(SP2_2);
-                output[7] = StringTranslate.statesToString(SP5_2);
+                output[6] = StringTranslate.statesToString(SP2_2,1);
+                output[7] = StringTranslate.statesToString(SP5_2,1);
 
             } else {
                 if ((aux[0] == 0) && (aux[1] == 0)) {
@@ -330,8 +330,8 @@ public class Simulate {
                     System.out.println("4");
                     //NEXT();
                     */
-                    output[6] = StringTranslate.statesToString(SP2_2);
-                    output[7] = StringTranslate.statesToString(SP5_2);
+                    output[6] = StringTranslate.statesToString(SP2_2,1);
+                    output[7] = StringTranslate.statesToString(SP5_2,1);
 
                 } else {
                     //System.out.println("failure");
@@ -362,8 +362,8 @@ public class Simulate {
         System.out.println("");
         //NEXT();
         */
-        output[8] = StringTranslate.statesToString(SP2_2);
-        output[9] = StringTranslate.statesToString(SP5_2);
+        output[8] = StringTranslate.statesToString(SP2_2,1);
+        output[9] = StringTranslate.statesToString(SP5_2,1);
 
         //4.r1，r2执行操作
         R1P = StringTranslate.complexToString(Operators.Operator_P(n[1][1]^n[2][2],0));
@@ -380,8 +380,8 @@ public class Simulate {
         System.out.println("");
         //NEXT();
          */
-        output[10] = StringTranslate.statesToString(SP2_2);
-        output[11]= StringTranslate.statesToString(SP5_2);
+        output[10] = StringTranslate.statesToString(SP2_2,1);
+        output[11]= StringTranslate.statesToString(SP5_2,1);
 
         /**
         System.out.println("complete");
